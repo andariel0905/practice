@@ -1,6 +1,7 @@
-const Express = require('express');
+import Express from 'express';
+import Search from '../handlers/mainSearch_handler';
 
 const mainSearchRouter = Express.Router();
-mainSearchRouter.use("/", )
+mainSearchRouter.get("/:q", Search);
 
 export default mainSearchRouter;

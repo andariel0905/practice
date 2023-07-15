@@ -1,5 +1,5 @@
-const App = require('./app')();
-const Db = require('./db')();
+import App from "./app";
+import Db from "./db";
 
 Db();
 
