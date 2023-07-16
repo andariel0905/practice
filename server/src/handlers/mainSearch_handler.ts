@@ -1,4 +1,8 @@
 import { Request, Response } from 'express';
+import Album from '../models/Album';
+import Artist from '../models/Artist';
+import Playlist from '../models/Playlist';
+import Track from '../models/Track';
 
 const axios = require('axios');
 
@@ -15,7 +19,7 @@ const Search = async (req: Request, res: Response) => {
         url: 'https://spotify23.p.rapidapi.com/search/',
         params: {
             q,
-            type: 'albums',
+            type: 'multi',
             numberOfTopResults: '500',
             offset,
             limit,
@@ -28,9 +32,52 @@ const Search = async (req: Request, res: Response) => {
     };
 
     try {
-        const response = await axios.request(options);
-        console.log(response.data);
-        return res.send(response.data);
+        interface Artist {
+            uri: string;
+            profile: {name: string}
+        };
+
+        const data = await axios.request(options).data;
+        console.log(data);
+        for (const album of data.albums.items) {
+            let newAlbum = new Album({
+                uri: album.data.uri,
+                name: album.data.name,
+                artists: album.data.artists.items.map((artist: Artist) => artist.profile.name),
+                coverArt: { type: Object, required: true},
+                date: { type: Number, required: true} 
+            });
+            await newAlbum.save();
+        }
+        for (const artist of data.artists.items) {
+            let newArtist = new Artist({
+                uri: artist.data.uri,
+                name: artist.data.profile.name,
+                avatarImage: artist.data.visuals.avatarImage.sources[0]
+            });
+            await newArtist.save();
+        }
+        for (const playlist of data.playlists.items) {
+            let newPlaylist = new Playlist({
+                uri: playlist.data.uri,
+                name: playlist.data.name,
+                description: playlist.data.description,
+                image: playlist.data.images.sources[0],
+                owner: playlist.data.owner
+            });
+            await newPlaylist.save();
+        }
+        for (const track of data.tracks.items) {
+            let newTrack = new Track({
+                uri: track.data.uri,
+                name: track.data.name,
+                album: track.data.albumOfTrack,
+                artists: track.data.artists.items.map((artist: Artist) => artist.profile.name),
+                duration: track.data.duration
+            });
+            await newTrack.save();
+        }
+        return res.send(data);
     } catch (error) {
         console.error(error);
         return res.status(500).send((error as Error).message)

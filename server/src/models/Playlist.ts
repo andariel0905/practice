@@ -1,6 +1,6 @@
 const Mongoose = require('mongoose');
 
-const playlistSchema = new Mongoose.schema({
+const playlistSchema = new Mongoose.Schema({
     uri: { type: String, required: true},
     name: { type: String, required: true },
     description: { type: Array, required: true},
@@ -8,5 +8,5 @@ const playlistSchema = new Mongoose.schema({
     owner: { type: String, required: true}
 });
 
-const Playlist = Mongoose.model("Usuario", playlistSchema);
+const Playlist = Mongoose.model("Playlist", playlistSchema);
 export default Playlist;

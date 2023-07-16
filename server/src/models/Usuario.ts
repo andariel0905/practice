@@ -1,6 +1,6 @@
 const Mongoose = require('mongoose');
 
-const usuarioSchema = new Mongoose.schema({
+const usuarioSchema = new Mongoose.Schema({
     nombre: { type: String, required: true },
     correo: { type: String, required: true },
     contraseña: { type: String, required: true },

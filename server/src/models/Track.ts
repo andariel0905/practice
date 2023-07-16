@@ -1,6 +1,6 @@
 const Mongoose = require('mongoose');
 
-const trackSchema = new Mongoose.schema({
+const trackSchema = new Mongoose.Schema({
     uri: { type: String, required: true},
     name: { type: String, required: true },
     album: { type: Object, required: true},
@@ -8,5 +8,5 @@ const trackSchema = new Mongoose.schema({
     duration: { type: Number, required: true}
 });
 
-const Track = Mongoose.model("Usuario", trackSchema);
+const Track = Mongoose.model("Track", trackSchema);
 export default Track;
