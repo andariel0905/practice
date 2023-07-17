@@ -5,7 +5,7 @@ const albumSchema = new Mongoose.Schema({
     name: { type: String, required: true },
     artists: { type: Array, required: true},
     coverArt: { type: Object, required: true},
-    date: { type: Number, required: true}
+    date: { type: Number, required: true }
 });
 
 const Album = Mongoose.model("Album", albumSchema);

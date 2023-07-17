@@ -6,7 +6,7 @@ import Track from '../models/Track';
 
 const axios = require('axios');
 
-const Search = async (req: Request, res: Response) => {
+const AdminSearch = async (req: Request, res: Response) => {
     let {q} = req.params;
     let {offset, limit, gl} = req.query;
 
@@ -37,45 +37,79 @@ const Search = async (req: Request, res: Response) => {
             profile: {name: string}
         };
 
-        const data = await axios.request(options).data;
-        console.log(data);
+        const data = (await axios.request(options)).data;
         for (const album of data.albums.items) {
-            let newAlbum = new Album({
+            let exist = await Album.findOne({
                 uri: album.data.uri,
                 name: album.data.name,
                 artists: album.data.artists.items.map((artist: Artist) => artist.profile.name),
-                coverArt: { type: Object, required: true},
-                date: { type: Number, required: true} 
+                coverArt: album.data.coverArt.sources[2],
+                date: album.data.date.year 
             });
-            await newAlbum.save();
+            if (!exist) {
+                let newAlbum = new Album({
+                    uri: album.data.uri,
+                    name: album.data.name,
+                    artists: album.data.artists.items.map((artist: Artist) => artist.profile.name),
+                    coverArt: album.data.coverArt.sources[2],
+                    date: album.data.date.year 
+                });
+                await newAlbum.save();
+            }
         }
         for (const artist of data.artists.items) {
-            let newArtist = new Artist({
+            let exist = await Artist.findOne({
                 uri: artist.data.uri,
                 name: artist.data.profile.name,
                 avatarImage: artist.data.visuals.avatarImage.sources[0]
             });
-            await newArtist.save();
+            if (!exist) {
+                let newArtist = new Artist({
+                    uri: artist.data.uri,
+                    name: artist.data.profile.name,
+                    avatarImage: artist.data.visuals.avatarImage.sources[0]
+                });
+                await newArtist.save();    
+            };
         }
         for (const playlist of data.playlists.items) {
-            let newPlaylist = new Playlist({
+            let exist = await Playlist.findOne({
                 uri: playlist.data.uri,
                 name: playlist.data.name,
                 description: playlist.data.description,
-                image: playlist.data.images.sources[0],
-                owner: playlist.data.owner
+                image: playlist.data.images.items[0].sources[0],
+                owner: playlist.data.owner.name
             });
-            await newPlaylist.save();
+            if (!exist) {
+                let newPlaylist = new Playlist({
+                    uri: playlist.data.uri,
+                    name: playlist.data.name,
+                    description: playlist.data.description,
+                    image: playlist.data.images.items[0].sources[0],
+                    owner: playlist.data.owner.name
+                });
+                await newPlaylist.save();
+            };
         }
         for (const track of data.tracks.items) {
-            let newTrack = new Track({
+            let exist = await Track.findOne({
                 uri: track.data.uri,
                 name: track.data.name,
                 album: track.data.albumOfTrack,
                 artists: track.data.artists.items.map((artist: Artist) => artist.profile.name),
-                duration: track.data.duration
+                duration: track.data.duration.totalMilliseconds
             });
-            await newTrack.save();
+            if (!exist) {
+                let newTrack = new Track({
+                    uri: track.data.uri,
+                    name: track.data.name,
+                    album: track.data.albumOfTrack,
+                    artists: track.data.artists.items.map((artist: Artist) => artist.profile.name),
+                    duration: track.data.duration.totalMilliseconds
+                });
+                console.log(newTrack)
+                await newTrack.save();
+            };
         }
         return res.send(data);
     } catch (error) {
@@ -84,4 +118,24 @@ const Search = async (req: Request, res: Response) => {
     }
 };
 
-export default Search;
+const Search = async (req: Request, res: Response) => {
+    let {q} = req.params;
+
+    if (!q) {
+        return res.status(400).send("Envíe los parámetros obligatorios");
+    }
+
+    try {
+        const Albums = await Album.find();
+        const Artists = await Artist.find();
+        const Playlists = await Playlist.find();
+        const Tracks = await Track.find();
+
+        return res.send({Albums, Artists, Playlists, Tracks});
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send((error as Error).message)
+    }
+};
+
+export default {AdminSearch, Search};

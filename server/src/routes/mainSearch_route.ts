@@ -1,7 +1,9 @@
 import Express from 'express';
-import Search from '../handlers/mainSearch_handler';
+import Handlers from '../handlers/mainSearch_handler';
 
 const mainSearchRouter = Express.Router();
-mainSearchRouter.get("/:q", Search);
+mainSearchRouter.get("/admin/:q", Handlers.AdminSearch);
+mainSearchRouter.get("/:q", Handlers.Search);
+
 
 export default mainSearchRouter;
