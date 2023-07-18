@@ -1,0 +1,8 @@
+.containerStyle {
+    height: 90vh;
+}
+  
+.containerDarkMode {
+    background-color: black;
+    color: white;
+}

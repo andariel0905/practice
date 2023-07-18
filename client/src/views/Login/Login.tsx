@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useState} from "react";
 import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import style from './Login.module.css';
 
 function Login () {
-    const ContainerStyle = {
-        height: "90vh"
-    }
+    const [darkMode, setDarkMode] = useState(false);
+
+    const bodyClasses = darkMode ? style.containerDarkMode : "";
+    
+    const containerClasses  = darkMode 
+        ? `${style.containerDarkMode} ${style.containerStyle}`
+        : style.containerStyle 
 
     return (
-        <Container style={ContainerStyle}>
-            <h1>Login</h1>
-        </Container>
+        <div className={bodyClasses}>
+            <Container className={containerClasses}>
+                <h1>Login</h1>
+                <Button onClick={() => setDarkMode(!darkMode)}>Dark Mode</Button>
+            </Container>
+        </div>
     )
 };
 
