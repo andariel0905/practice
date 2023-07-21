@@ -58,6 +58,7 @@ const Search = async (req: Request, res: Response) => {
     try {
         const response = await axios.get(options);
         console.log(response.data);
+        return response.data;
     } catch (error) {
         console.error(error);
     }
