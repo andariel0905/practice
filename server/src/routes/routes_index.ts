@@ -1,6 +1,8 @@
-const {Router} = require('express');
-const mainSearchRoute = require('./mainSearch_route')();
+import { Router } from "express";
+
+import mainSearchRouter from "./mainSearch_route";
+
 const Routes = Router();
-Routes.use("/search", mainSearchRoute);
+Routes.use("/search", mainSearchRouter);
 
 export default Routes;

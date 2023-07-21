@@ -1,8 +1,8 @@
-const App = require('./app');
-const Db = require('./db');
+import App from "./app";
+import Db from "./db";
 
-Db.default();
+Db();
 
-App.default.listen(3001, () => {
+App.listen(3001, () => {
     console.log(`Server started at 3001`)
 });
