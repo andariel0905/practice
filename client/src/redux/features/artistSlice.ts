@@ -1,15 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-
-export interface Artist {
-    uri: string,
-    name: string,
-    avatarImage: {
-        url: string,
-        width: number,
-        height: number
-    }
-}
-
+import { Artist } from "../../types"
 export interface ArtistState {
     artists: Array<Artist>
 }

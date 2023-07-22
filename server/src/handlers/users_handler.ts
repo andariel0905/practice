@@ -15,26 +15,26 @@ const getUsuario = async (_req: Request, res: Response) => {
 
 const postUsuario = async (req: Request, res: Response) =>  {
     try {
-        const { nombre, correo, contraseña } = req.body;
-        if (!nombre || !correo || !contraseña) {
+        const { name, email, password } = req.body;
+        if (!name || !email || !password) {
           return res.status(400).json({ mensaje: "Faltan campos obligatorios" });
         }
         
-        const usuarioExistente = await Usuario.findOne({ correo });
+        const usuarioExistente = await Usuario.findOne({ email });
         if (usuarioExistente) {
           return res.status(400).json({ mensaje: "El correo ya está registrado" });
         }
         
         const saltRounds = 10;
-        const hash = await bcrypt.hash(contraseña, saltRounds);
+        const hash = await bcrypt.hash(password, saltRounds);
         const nuevoUsuario = new Usuario({
-          nombre,
-          correo,
-          contraseña: hash,
+          name,
+          email,
+          password: hash,
         });
         await nuevoUsuario.save();
     
-        return res.status(200).json({ mensaje: "Usuario registrado exitosamente" });
+        return res.status(200).json(nuevoUsuario);
     } catch (error) {
         console.error(error);
         return res.status(500).send((error as Error).message)

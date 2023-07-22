@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Route, Routes} from 'react-router-dom';
 import Home from './views/Home/Home';
 import Login from './views/Login/Login'
 import NavBarComponent from './components/NavBar/NavBar';
 import Profile from './views/Profile/Profile';
 import Footer from './components/Footer/Footer';
+import { useAppDispatch } from './redux/store';
+import { fetchUsuarios } from './redux/features/userSlice';
 
 function App() {
+    const dispatch = useAppDispatch()
+    
+    useEffect(() => {
+        dispatch(fetchUsuarios())
+    }, [])
+
     return (
         <>
             <NavBarComponent/>
