@@ -18,7 +18,7 @@ export const UserSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        addUser: (state, action: PayloadAction<User>) => {
+        postUsuario: (state, action: PayloadAction<User>) => {
             state.users.push({
                 name: action.payload.name,
                 password: action.payload.password,
@@ -29,4 +29,4 @@ export const UserSlice = createSlice({
 })
 
 export default UserSlice.reducer;
-export const { addUser } = UserSlice.actions; 
+export const { postUsuario } = UserSlice.actions; 

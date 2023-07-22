@@ -4,8 +4,9 @@ import Button from "react-bootstrap/Button";
 import style from './Login.module.css';
 import { User } from '../../types';
 import { useAppDispatch } from "../../redux/store";
-import { addUser } from "../../redux/features/userSlice";
+import { postUsuario } from "../../redux/features/userSlice";
 import List from "../../components/List/List";
+import { Form } from "react-bootstrap";
 
 interface FormState {
     inputValues: User
@@ -30,7 +31,7 @@ function Login () {
 
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
-        dispatch(addUser(inputValues))
+        dispatch(postUsuario(inputValues))
         setInputValues({
             name: '',
             password: '',
@@ -49,12 +50,12 @@ function Login () {
             <Container className={containerClasses}>
                 <h1>Login</h1>
                 <Button onClick={() => setDarkMode(!darkMode)}>Dark Mode</Button>
-                <form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
                     <input onChange={handleChange} value={inputValues.email} type="text" name="email" placeholder="email"/>
                     <input onChange={handleChange} value={inputValues.name} type="text" name="name" placeholder="name"/>
                     <input onChange={handleChange} value={inputValues.password} type="text" name="password" placeholder="password"/>
-                    <button type="submit">Log in</button>
-                </form>
+                    <Button type="submit">Log in</Button>
+                </Form>
                 <List/>
             </Container>
         </div>
