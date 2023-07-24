@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
 import style from './Home.module.css';
+import { useAppSelector } from "../../redux/store";
 
 function Home () {
-    const [darkMode, setDarkMode] = useState(false);
+    const darkMode = useAppSelector(state => state.user.darkMode)
 
-    const bodyClasses = darkMode ? style.containerDarkMode : "";
+    const bodyClasses = darkMode ? style.containerDarkMode : ""
 
     const containerClasses  = darkMode 
         ? `${style.containerDarkMode} ${style.containerStyle}`
@@ -16,7 +16,6 @@ function Home () {
         <div className={bodyClasses}>
             <Container className={containerClasses}>
                 <h1>Home</h1>
-                <Button onClick={() => setDarkMode(!darkMode)}>Dark Mode</Button>
             </Container>
         </div>
     )

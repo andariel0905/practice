@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import style from './Login.module.css';
 import { User } from '../../types';
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { postUsuario } from "../../redux/features/userSlice";
 import List from "../../components/List/List";
 import { Form } from "react-bootstrap";
@@ -14,9 +14,9 @@ interface FormState {
 
 function Login () {
     const dispatch = useAppDispatch();
-    const [darkMode, setDarkMode] = useState(false);
+    const darkMode = useAppSelector(state => state.user.darkMode)
 
-    const bodyClasses = darkMode ? style.containerDarkMode : "";
+    const bodyClasses = darkMode ? style.containerDarkMode : ""
     
     const containerClasses  = darkMode 
         ? `${style.containerDarkMode} ${style.containerStyle}`
@@ -49,7 +49,6 @@ function Login () {
         <div className={bodyClasses}>
             <Container className={containerClasses}>
                 <h1>Login</h1>
-                <Button onClick={() => setDarkMode(!darkMode)}>Dark Mode</Button>
                 <Form onSubmit={handleSubmit}>
                     <input onChange={handleChange} value={inputValues.email} type="text" name="email" placeholder="email"/>
                     <input onChange={handleChange} value={inputValues.name} type="text" name="name" placeholder="name"/>

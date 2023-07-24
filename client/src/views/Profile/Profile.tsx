@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
 import style from './Profile.module.css';
+import { useAppSelector } from '../../redux/store';
 
 function Profile () {
-    const [darkMode, setDarkMode] = useState(false);
+    const darkMode = useAppSelector(state => state.user.darkMode)
 
     const bodyClasses = darkMode ? style.containerDarkMode : "";
 
@@ -16,7 +16,6 @@ function Profile () {
         <div className={bodyClasses}>
             <Container className={containerClasses}>
                 <h1>Profile</h1>
-                <Button onClick={() => setDarkMode(!darkMode)}>Dark Mode</Button>
             </Container>
         </div>  
     )

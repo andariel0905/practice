@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice, /*PayloadAction*/ } from "@reduxjs/toolkit"
 import { User } from "../../types"
 export interface UserState {
-    users: Array<User>
+    users: Array<User>,
+    darkMode: boolean
 }
 
-const initialState: UserState = {
-    users: []
+const initialState: UserState  = {
+    users: [],
+    darkMode: false
 }
 
 export const fetchUsuarios = createAsyncThunk("usuario/fetch", async () => {
@@ -30,6 +32,9 @@ export const UserSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
+        toggleDarkMode: (state) => {
+            state.darkMode = !state.darkMode
+        }
         // addUsuario: (state, action: PayloadAction<User>) => {
         //     state.users.push({
         //         name: action.payload.name,
@@ -50,4 +55,4 @@ export const UserSlice = createSlice({
 })
 
 export default UserSlice.reducer;
-// export const { addUsuario } = UserSlice.actions; 
+export const { toggleDarkMode } = UserSlice.actions; 
