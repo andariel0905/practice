@@ -103,7 +103,12 @@ const AdminSearch = async (req: Request, res: Response) => {
                 let newTrack = new Track({
                     uri: track.data.uri,
                     name: track.data.name,
-                    album: track.data.albumOfTrack,
+                    album: {
+                        uri: track.data.albumOfTrack.uri,
+                        name: track.data.albumOfTrack.name,
+                        coverArt: track.data.albumOfTrack.coverArt.sources[2],
+                        shareUrl: track.data.albumOfTrack.sharingInfo.shareUrl
+                    },
                     artists: track.data.artists.items.map((artist: Artist) => artist.profile.name),
                     duration: track.data.duration.totalMilliseconds
                 });
