@@ -2,6 +2,7 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import style from './Home.module.css';
 import { useAppSelector } from "../../redux/store";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 function Home () {
     const darkMode = useAppSelector(state => state.user.darkMode)
@@ -16,6 +17,7 @@ function Home () {
         <div className={bodyClasses}>
             <Container className={containerClasses}>
                 <h1>Home</h1>
+                <SearchBar/>
             </Container>
         </div>
     )
