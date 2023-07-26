@@ -1,18 +1,26 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { Album, Artist, Playlist, Track } from "../../types"
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { Album, Artist, Playlist, SearchProps, Track } from "../../types"
 
 export interface DataState {
     albums: Array<Album>,
     artists: Array<Artist>,
     playlists: Array<Playlist>,
-    tracks: Array<Track>
+    tracks: Array<Track>,
+    searchProps: SearchProps
 }
 
 const initialState: DataState  = {
     albums: [],
     artists: [],
     playlists: [],
-    tracks: []
+    tracks: [],
+    searchProps: {
+        q: "",
+        albums: false,
+        artists: false,
+        playlists: false,
+        tracks: false
+    } 
 }
 
 export const getData = createAsyncThunk("data/fetch", async (q: string) => {
@@ -21,13 +29,13 @@ export const getData = createAsyncThunk("data/fetch", async (q: string) => {
     return data
 })
 
-export const AlbumSlice = createSlice({
+export const DataSlice = createSlice({
     name: "data",
     initialState,
     reducers: {
-        // addAlbum: (state, action: PayloadAction<Array<Album>>) => {
-        //     state.albums = action.payload
-        // }
+        setStateSearchProps: (state, action: PayloadAction<SearchProps>) => {
+            state.searchProps = action.payload
+        }
     },
     extraReducers(builder) {
         builder.addCase(getData.fulfilled, (state, action) => {
@@ -39,5 +47,5 @@ export const AlbumSlice = createSlice({
     },
 })
 
-export default AlbumSlice.reducer;
-// export const { addAlbum } = AlbumSlice.actions;
+export default DataSlice.reducer;
+export const { setStateSearchProps } = DataSlice.actions;

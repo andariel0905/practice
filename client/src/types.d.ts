@@ -54,3 +54,11 @@ export interface User {
     password: string,
     email: string
 }
+
+export interface SearchProps {
+    q: string,
+    albums: boolean,
+    artists: boolean,
+    playlists: boolean,
+    tracks: boolean
+}
