@@ -25,21 +25,33 @@ function Home () {
             <Container className={containerClasses}>
                 <h1>Home</h1>
                 <SearchBar/>
-                {filters.albums !== false &&
-                    <h3>Albums</h3> && 
-                    data.albums.map(album => (<AlbumCard album={album}/>))
+                {filters.albums !== false && data.albums ?
+                    <>
+                        <h3>Albums</h3>
+                        {data.albums.map(album => (<AlbumCard album={album}/>))}
+                    </>
+                    : null
                 }
-                {filters.artists !== false &&
-                    <h3>Artists</h3> && 
-                    data.artists.map(artist => (<ArtistCard artist={artist}/>))
+                {filters.artists !== false && data.artists ?
+                    <>
+                        <h3>Artists</h3>
+                        {data.artists.map(artist => (<ArtistCard artist={artist}/>))}
+                    </>
+                    : null
                 }
-                {filters.playlists !== false &&
-                    <h3>Playlists</h3> && 
-                    data.playlists.map(playlists => (<PlaylistCard playlist={playlists}/>))
+                {filters.playlists !== false && data.playlists ?
+                    <>
+                        <h3>Playlists</h3>
+                        {data.playlists.map(playlists => (<PlaylistCard playlist={playlists}/>))}
+                    </>
+                    : null
                 }
-                {filters.tracks !== false &&
-                    <h3>Tracks</h3> && 
-                    data.tracks.map(tracks => (<TrackCard track={tracks}/>))
+                {filters.tracks !== false && data.tracks ?
+                    <>
+                        <h3>Tracks</h3>
+                        {data.tracks.map(tracks => (<TrackCard track={tracks}/>))}
+                    </>
+                    : null
                 }
             </Container>
         </div>

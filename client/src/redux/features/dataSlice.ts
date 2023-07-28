@@ -24,7 +24,7 @@ const initialState: DataState  = {
 }
 
 export const getData = createAsyncThunk("data/fetch", async (q: string) => {
-    const response = await fetch(`localhost:3001/search/${q}`, { method: "GET" })
+    const response = await fetch(`http://localhost:3001/search/${q}`, { method: "GET" })
     const data = await response.json()
     return data
 })
@@ -39,10 +39,10 @@ export const DataSlice = createSlice({
     },
     extraReducers(builder) {
         builder.addCase(getData.fulfilled, (state, action) => {
-            state.albums = action.payload.albums,
-            state.artists = action.payload.artists,
-            state.playlists = action.payload.playlists,
-            state.tracks = action.payload.tracks
+            state.albums = action.payload.Albums,
+            state.artists = action.payload.Artists,
+            state.playlists = action.payload.Playlists,
+            state.tracks = action.payload.Tracks
         })
     },
 })
