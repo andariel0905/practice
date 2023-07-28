@@ -2,7 +2,7 @@ import React from "react"
 import { Container } from "react-bootstrap"
 import { Album } from "../../types"
 
-function AlbumCard (album: Album) {
+function AlbumCard ({ album }: { album: Album }) {
     
     return (
         <Container>

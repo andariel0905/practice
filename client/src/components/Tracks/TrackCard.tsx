@@ -2,7 +2,7 @@ import React from "react"
 import { Container } from "react-bootstrap"
 import { Track } from "../../types"
 
-function TrackCard (track: Track) {
+function TrackCard ({track} : {track: Track}) {
     
     return (
         <Container>

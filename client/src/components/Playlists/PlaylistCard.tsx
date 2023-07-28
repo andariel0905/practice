@@ -2,7 +2,7 @@ import React from "react"
 import { Container } from "react-bootstrap"
 import { Playlist } from "../../types"
 
-function PlaylistCard (playlist: Playlist) {
+function PlaylistCard ({playlist}: {playlist: Playlist}) {
     
     return (
         <Container>

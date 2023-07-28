@@ -2,7 +2,7 @@ import React from "react"
 import { Container } from "react-bootstrap"
 import { Artist } from "../../types"
 
-function ArtistCard (artist: Artist) {
+function ArtistCard ({artist}: {artist: Artist}) {
     
     return (
         <Container>
