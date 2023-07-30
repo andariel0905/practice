@@ -7,6 +7,7 @@ import Profile from './views/Profile/Profile';
 import Footer from './components/Footer/Footer';
 import { useAppDispatch } from './redux/store';
 import { fetchUsuarios } from './redux/features/userSlice';
+import Register from './views/Register/Register';
 
 function App() {
     const dispatch = useAppDispatch()
@@ -20,7 +21,8 @@ function App() {
             <NavBarComponent/>
             <Routes>
                 <Route path='/' element={<Home/>}/>
-                <Route path='login' element={<Login/>}/>
+                <Route path='/login' element={<Login/>}/>
+                <Route path='/register' element={<Register/>}/>
                 <Route path='/profile' element={<Profile/>}/>
             </Routes>
             <Footer/>

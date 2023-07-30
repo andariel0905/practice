@@ -50,7 +50,7 @@ export interface Track {
 }
 
 export interface User {
-    name: string,
+    name?: string,
     password: string,
     email: string
 }

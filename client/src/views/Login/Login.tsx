@@ -4,8 +4,7 @@ import Button from "react-bootstrap/Button";
 import style from './Login.module.css';
 import { User } from '../../types';
 import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { postUsuario } from "../../redux/features/userSlice";
-import List from "../../components/List/List";
+import { loginUser } from "../../redux/features/userSlice";
 import { Form } from "react-bootstrap";
 
 interface FormState {
@@ -24,16 +23,14 @@ function Login () {
     
 
     const [inputValues, setInputValues] = useState<FormState["inputValues"]>({
-        name: '',
         password: '',
         email: ''
     });
 
     const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
-        dispatch(postUsuario(inputValues))
+        dispatch(loginUser(inputValues))
         setInputValues({
-            name: '',
             password: '',
             email: ''
         })
@@ -51,11 +48,9 @@ function Login () {
                 <h1>Login</h1>
                 <Form onSubmit={handleSubmit}>
                     <input onChange={handleChange} value={inputValues.email} type="text" name="email" placeholder="email"/>
-                    <input onChange={handleChange} value={inputValues.name} type="text" name="name" placeholder="name"/>
                     <input onChange={handleChange} value={inputValues.password} type="text" name="password" placeholder="password"/>
                     <Button type="submit">Log in</Button>
                 </Form>
-                <List/>
             </Container>
         </div>
     )
